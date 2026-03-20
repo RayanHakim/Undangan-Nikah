@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawiwahan Ageng Keraton - Lorem & Ipsum 2030</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Javanese:wght@400;700&family=Playball&family=Playfair+Display:ital,wght@0,700;0,900;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        jawaDeep: '#130d08',   
+                        jawaGold: '#D4AF37',   
+                        jawaSoga: '#4a2c1d',   
+                        jawaMori: '#FAF5E6',   
+                    },
+                    animation: {
+                        'spin-slow': 'spin 8s linear infinite',
+                        'pulse-gold': 'pulseGold 2s infinite',
+                    },
+                    keyframes: {
+                        pulseGold: {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(212, 175, 55, 0.4)' },
+                            '50%': { boxShadow: '0 0 0 15px rgba(212, 175, 55, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { 
+            background-color: #130d08; 
+            color: #FAF5E6; 
+            font-family: 'Poppins', sans-serif;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
+        }
+        
+        .font-playball { font-family: 'Playball', cursive; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .aksara-jawa { font-family: 'Noto Sans Javanese', sans-serif; }
+        
+        .royal-card {
+            background: rgba(19, 13, 8, 0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid #D4AF37;
+            position: relative;
+        }
+        .royal-card::before {
+            content: "";
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            pointer-events: none;
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .gold-particle {
+            position: fixed; top: -10%;
+            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
+            border-radius: 50%; pointer-events: none; z-index: 1;
+            animation: fall linear infinite;
+        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+        .slider-container {
+            display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+        }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slide-item { flex: 0 0 85%; scroll-snap-align: center; margin-right: 15px; position: relative; }
+        @media (min-width: 768px) { .slide-item { flex: 0 0 50%; } }
+
+        .btn-gold {
+            background: linear-gradient(45deg, #4a2c1d, #BF953F);
+            color: white; transition: 0.3s;
+            border: 1px solid #FCF6BA;
+        }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 0 25px rgba(212, 175, 55, 0.7); }
+
+        .ar-rum-text { font-family: 'Times New Roman', serif; direction: rtl; }
+
+        /* Timeline Vertikal Mewah */
+        .timeline-container { position: relative; padding-left: 30px; }
+        .timeline-container::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(to bottom, transparent, #D4AF37, transparent);
+        }
+        .timeline-item { position: relative; margin-bottom: 3rem; }
+        .timeline-item::before {
+            content: '✧'; position: absolute; left: -39px; top: 0;
+            color: #FCF6BA; font-size: 1.2rem; background: #130d08; padding: 5px;
+        }
+        
+        /* Custom Scrollbar untuk Box Ucapan */
+        .scroll-ucapan::-webkit-scrollbar { width: 4px; }
+        .scroll-ucapan::-webkit-scrollbar-track { background: transparent; }
+        .scroll-ucapan::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <div id="particles"></div>
+
+    <audio id="bgMusic" loop><source src="lagu_nikah.mp3" type="audio/mpeg"></audio>
+
+    <button id="musicBtn" class="fixed bottom-6 right-6 z-50 bg-jawaDeep text-jawaGold w-12 h-12 rounded-full shadow-lg border-2 border-jawaGold flex items-center justify-center transition-all hover:scale-110">
+        <i id="musicIcon" class="fa-solid fa-music"></i>
+    </button>
+
+    <section class="min-h-screen flex items-center justify-center p-6 relative bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')] bg-fixed">
+        <div class="royal-card p-10 md:p-24 rounded-none max-w-3xl w-full text-center relative z-10" data-aos="zoom-in" data-aos-duration="1500">
+            <div class="aksara-jawa text-3xl md:text-4xl text-jawaGold mb-4 opacity-80">ꦥꦮꦶꦮꦲꦤ꧀ꦄꦒꦼꦁ</div>
+            <h3 class="uppercase tracking-[0.5em] text-jawaGold/80 text-xs mb-8">Serat Undangan Pawiwahan</h3>
+            
+            <h1 class="font-playball text-7xl md:text-9xl text-gradient-gold mb-6">Lorem & Ipsum</h1>
+            
+            <p class="font-playfair text-xl md:text-2xl mb-12 tracking-[0.2em] uppercase text-jawaMori">Senin, 20 Mei 2030</p>
+            
+            <button id="btnBuka" class="btn-gold px-10 py-4 font-bold tracking-widest uppercase text-sm animate-pulse-gold">
+                Buka Serat Undangan
+            </button>
+        </div>
+    </section>
+
+    <div id="konten" class="hidden relative z-10">
+        
+        <div class="text-center mt-12 opacity-50"><i class="fa-solid fa-dharmachakra text-3xl text-jawaGold animate-spin-slow"></i></div>
+
+        <section class="py-20 px-6 text-center max-w-4xl mx-auto" data-aos="fade-up">
+            <h2 class="font-playfair text-3xl md:text-4xl ar-rum-text text-jawaGold mb-8 leading-relaxed">
+                وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
+            </h2>
+            <p class="text-sm md:text-base text-jawaMori/90 italic max-w-2xl mx-auto mb-6">
+                "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya..."
+            </p>
+            <p class="text-xs tracking-[0.3em] uppercase text-jawaGold opacity-70">— QS. Ar-Rum: 21</p>
+        </section>
+
+        <div class="text-center opacity-50 my-8"><i class="fa-solid fa-dharmachakra text-2xl text-jawaGold animate-spin-slow"></i></div>
+
+        <section class="py-20 px-6 max-w-6xl mx-auto space-y-24">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <div class="aksara-jawa text-4xl text-jawaGold mb-2">ꦥꦔꦤ꧀ꦠꦺꦤ꧀</div>
+                <h2 class="font-playfair text-2xl text-jawaMori tracking-widest uppercase">Profil Pengantin</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right" data-aos-duration="1000">
+                    <div class="w-64 h-80 mx-auto md:mr-0 border-2 border-jawaGold p-2 mb-6 shadow-2xl relative group">
+                        <img src="foto_pria.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Pria">
+                    </div>
+                    <div class="text-center md:text-right">
+                        <h2 class="font-playball text-5xl text-gradient-gold mb-2">Lorem Ipsum, S.T.</h2>
+                        <p class="text-xs uppercase tracking-widest text-jawaMori/70">Putra saking Bapak Lorem & Ibu Ipsum</p>
+                    </div>
+                </div>
+
+                <div data-aos="fade-left" data-aos-duration="1000">
+                    <div class="w-64 h-80 mx-auto md:ml-0 border-2 border-jawaGold p-2 mb-6 shadow-2xl relative group">
+                        <img src="foto_wanita.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Wanita">
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h2 class="font-playball text-5xl text-gradient-gold mb-2">Dolor Sit Amet, S.E.</h2>
+                        <p class="text-xs uppercase tracking-widest text-jawaMori/70">Putri saking Bapak Dolor & Ibu Amet</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 px-6 bg-black/30 border-y border-jawaGold/20 shadow-inner">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <div class="aksara-jawa text-4xl text-jawaGold mb-2">ꦭꦼꦭꦩ꧀ꦥꦲꦤ꧀</div>
+                    <h2 class="font-playball text-5xl text-gradient-gold mb-4">Lelampahanipun Katresnan</h2>
+                    <p class="font-poppins text-jawaMori/60 italic text-sm">"Saking netra mandhap ing wardaya."</p>
+                </div>
+
+                <div class="timeline-container mt-10" data-aos="fade-up">
+                    <div class="timeline-item" data-aos="fade-right">
+                        <h3 class="font-playfair text-2xl text-jawaGold tracking-widest uppercase mb-2">2022 • Pitepangan</h3>
+                        <p class="text-jawaMori/80 text-sm leading-relaxed">Panggih sepisanan ing satengahing kahanan ingkang mboten kinira. Saking pitepangan menika, tuwuh raos tresna.</p>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+                        <h3 class="font-playfair text-2xl text-jawaGold tracking-widest uppercase mb-2">2025 • Rembukan Ageng</h3>
+                        <p class="text-jawaMori/80 text-sm leading-relaxed">Keluarga ageng sami pepanggihan. Mengikat janji suci ing dalem prosesi lamaran ingkang khidmat.</p>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+                        <h3 class="font-playfair text-2xl text-jawaGold tracking-widest uppercase mb-2">2030 • Dhaup Suci</h3>
+                        <p class="text-jawaMori/80 text-sm leading-relaxed">Dinten ingkang dipun tenggo sampun dugi. Mugi tansah pinaringan berkah saking Gusti Ingkang Maha Kuwaos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="detail" class="py-24 px-6 relative bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')] bg-fixed">
+            <div class="max-w-5xl mx-auto relative z-20">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <div class="aksara-jawa text-4xl text-jawaGold mb-2">ꦠꦶꦠꦶꦮꦚ꧀ꦕꦶ</div>
+                    <h2 class="font-playball text-5xl font-bold text-gradient-gold mb-4">Waktu & Papan Acara</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10 font-poppins">
+                    <div class="royal-card p-10 text-center" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6 border border-jawaGold bg-jawaDeep">
+                            <i class="fa-solid fa-mosque text-2xl text-jawaGold"></i>
+                        </div>
+                        <h3 class="text-3xl text-gradient-gold mb-4 font-playfair tracking-widest uppercase">Akad Nikah</h3>
+                        <p class="text-jawaGold font-bold text-lg mb-2">Senin, 20 Mei 2030</p>
+                        <p class="text-jawaMori font-medium mb-4">Pukul 09.00 - 11.00 WIB</p>
+                        <hr class="border-jawaGold/20 w-1/2 mx-auto mb-4">
+                        <p class="text-jawaMori/80 text-sm italic">Lorem Ipsum Dolor Sit Amet,<br>Kota dummy, Yogyakarta</p>
+                    </div>
+
+                    <div class="royal-card p-10 text-center" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6 border border-jawaGold bg-jawaDeep">
+                            <i class="fa-solid fa-gift text-2xl text-jawaGold"></i>
+                        </div>
+                        <h3 class="text-3xl text-gradient-gold mb-4 font-playfair tracking-widest uppercase">Pawiwahan</h3>
+                        <p class="text-jawaGold font-bold text-lg mb-2">Senin, 20 Mei 2030</p>
+                        <p class="text-jawaMori font-medium mb-4">Pukul 13.00 WIB - Selesai</p>
+                        <hr class="border-jawaGold/20 w-1/2 mx-auto mb-4">
+                        <p class="text-jawaMori/80 text-sm italic">Lorem Ipsum Dolor Sit Amet,<br>Kota dummy, Yogyakarta</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 px-6 bg-black/50 border-y border-jawaGold/20 text-center">
+            <div class="max-w-2xl mx-auto" data-aos="fade-up">
+                <i class="fa-solid fa-video text-4xl text-jawaGold mb-6"></i>
+                <h2 class="font-playfair text-3xl text-gradient-gold mb-4 tracking-widest uppercase">Live Streaming</h2>
+                <p class="text-sm text-jawaMori/70 mb-8 leading-relaxed">Kagem panjenengan ingkang mboten saged rawuh, saged midhangetaken adicara pahargyan lumantar tautan ing ngandhap menika:</p>
+                <button class="btn-gold px-8 py-3 font-bold tracking-widest text-xs uppercase rounded flex items-center justify-center mx-auto gap-3 hover:scale-105">
+                    <i class="fa-brands fa-youtube text-lg"></i> Tonton Live YouTube
+                </button>
+            </div>
+        </section>
+
+        <section id="prewedding" class="py-24 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <div class="aksara-jawa text-4xl text-jawaGold mb-2">ꦏꦼꦤꦔꦤ꧀</div>
+                    <h2 class="font-playball text-5xl text-gradient-gold">Prewedding</h2>
+                </div>
+                
+                <div class="slider-container" id="sliderPrewed" data-aos="zoom-in" data-aos-duration="1200">
+                    <div class="slide-item">
+                        <div class="border border-jawaGold shadow-2xl relative overflow-hidden aspect-[4/5] md:aspect-[16/9] p-1 group">
+                            <img src="prewedding1.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                        </div>
+                    </div>
+                    <div class="slide-item">
+                        <div class="border border-jawaGold shadow-2xl relative overflow-hidden aspect-[4/5] md:aspect-[16/9] p-1 group">
+                            <img src="prewedding1.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                        </div>
+                    </div>
+                    <div class="slide-item">
+                        <div class="border border-jawaGold shadow-2xl relative overflow-hidden aspect-[4/5] md:aspect-[16/9] p-1 group">
+                            <img src="prewedding1.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 px-6 text-center bg-black/30 border-t border-jawaGold/20">
+            <div class="max-w-xl mx-auto" data-aos="fade-up">
+                <h2 class="font-playfair text-3xl text-gradient-gold mb-6 uppercase tracking-widest">Tondo Katresnan</h2>
+                <p class="text-sm text-jawaMori/70 mb-10 italic">"Jika ingin memberi kado sebagai tanda kasih, silakan melalui:"</p>
+                <div class="royal-card p-8 border-dashed border-jawaGold transform hover:-translate-y-2 transition-transform duration-500">
+                    <i class="fa-solid fa-wallet text-3xl text-jawaGold mb-4"></i>
+                    <p class="text-xs uppercase text-jawaMori/50 mb-2 tracking-widest">Bank Dummy</p>
+                    <p class="text-2xl font-bold tracking-widest text-jawaGold mb-2">123 - 4567 - 890</p>
+                    <p class="text-sm text-jawaMori">a.n Lorem Ipsum</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 px-6 max-w-4xl mx-auto" data-aos="fade-up">
+            <div class="text-center mb-12">
+                <h2 class="font-playfair text-3xl text-gradient-gold mb-4 uppercase tracking-widest">Buku Tamu</h2>
+                <p class="text-sm text-jawaMori/70">Kirim donga lan pangestu dumateng penganten.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="royal-card p-6">
+                    <form class="space-y-4">
+                        <input type="text" placeholder="Nama Anda" class="w-full bg-black/50 border border-jawaGold/30 p-3 text-sm text-jawaMori placeholder:text-gray-500 focus:outline-none focus:border-jawaGold">
+                        <select class="w-full bg-black/50 border border-jawaGold/30 p-3 text-sm text-jawaMori focus:outline-none focus:border-jawaGold appearance-none">
+                            <option value="">Kehadiran (Hadir / Tidak)</option>
+                            <option value="hadir">Saged Rawuh (Hadir)</option>
+                            <option value="tidak">Mboten Saged (Tidak Hadir)</option>
+                        </select>
+                        <textarea placeholder="Ucapan & Doa..." class="w-full bg-black/50 border border-jawaGold/30 p-3 text-sm text-jawaMori placeholder:text-gray-500 h-24 focus:outline-none focus:border-jawaGold"></textarea>
+                        <button type="button" class="btn-gold w-full py-3 font-bold tracking-widest text-xs uppercase">Kirim Ucapan</button>
+                    </form>
+                </div>
+
+                <div class="royal-card p-6 h-[320px] overflow-y-auto scroll-ucapan bg-black/20">
+                    <h4 class="text-jawaGold text-sm tracking-widest uppercase mb-4 font-bold border-b border-jawaGold/20 pb-2">Daftar Ucapan</h4>
+                    
+                    <div class="space-y-4">
+                        <div class="border-b border-jawaGold/10 pb-3">
+                            <p class="text-jawaGold font-bold text-sm">Budi Santoso <span class="bg-green-900/50 text-green-300 text-[10px] px-2 py-0.5 ml-2 rounded">Hadir</span></p>
+                            <p class="text-xs text-jawaMori/80 mt-1">Nderek mangayubagyo, mugi lancar ngantos paripurna adicara.</p>
+                        </div>
+                        <div class="border-b border-jawaGold/10 pb-3">
+                            <p class="text-jawaGold font-bold text-sm">Keluarga Dirgantara <span class="bg-green-900/50 text-green-300 text-[10px] px-2 py-0.5 ml-2 rounded">Hadir</span></p>
+                            <p class="text-xs text-jawaMori/80 mt-1">Selamat menempuh hidup baru. Samawa ya!</p>
+                        </div>
+                        <div class="border-b border-jawaGold/10 pb-3">
+                            <p class="text-jawaGold font-bold text-sm">Andi & Partner <span class="bg-red-900/50 text-red-300 text-[10px] px-2 py-0.5 ml-2 rounded">Absen</span></p>
+                            <p class="text-xs text-jawaMori/80 mt-1">Ngapunten dereng saged rawuh, donga pangestu kagem kedua mempelai.</p>
+                        </div>
+                        <div class="pb-3">
+                            <p class="text-jawaGold font-bold text-sm">Siti Aminah <span class="bg-green-900/50 text-green-300 text-[10px] px-2 py-0.5 ml-2 rounded">Hadir</span></p>
+                            <p class="text-xs text-jawaMori/80 mt-1">Lancar lancar sampai hari H! Gak sabar liat pengantinnya.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 px-6 text-center border-t border-jawaGold/30 relative bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')] bg-fixed">
+            <div data-aos="zoom-in" class="relative z-10 royal-card max-w-4xl mx-auto p-12">
+                <div class="aksara-jawa text-4xl text-jawaGold mb-2">ꦩꦶꦠꦸꦁꦢꦶꦤ꧀ꦠꦼꦤ꧀</div>
+                <h3 class="font-playfair text-2xl mb-12 tracking-[0.3em] uppercase text-jawaMori">Menuju Hari Bahagia</h3>
+                <div class="flex justify-center gap-6 md:gap-16">
+                    <div><span id="d" class="text-4xl md:text-7xl font-bold text-gradient-gold drop-shadow-lg">00</span><p class="text-xs mt-3 uppercase tracking-widest text-jawaMori/60">Dinten</p></div>
+                    <div><span id="h" class="text-4xl md:text-7xl font-bold text-gradient-gold drop-shadow-lg">00</span><p class="text-xs mt-3 uppercase tracking-widest text-jawaMori/60">Jam</p></div>
+                    <div><span id="m" class="text-4xl md:text-7xl font-bold text-gradient-gold drop-shadow-lg">00</span><p class="text-xs mt-3 uppercase tracking-widest text-jawaMori/60">Menit</p></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="py-12 text-center bg-[#0a0705] border-t border-jawaGold/40">
+        <div class="aksara-jawa text-4xl text-jawaGold mb-4 opacity-70">ꦩꦠꦸꦂꦤꦸꦮꦸꦤ꧀</div>
+        <p class="text-xs text-jawaMori/60 tracking-[0.5em] uppercase mb-4">Matur Nuwun Atas Rawuhipun</p>
+        <p class="text-[10px] text-jawaGold/40 tracking-widest uppercase">Keluarga Besar Bpk. Lorem & Bpk. Dolor</p>
+    </footer>
+
+    <script>
+        AOS.init({ once: true, offset: 50, duration: 1200 });
+
+        // Partikel
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 35; i++) {
+            const p = document.createElement('div');
+            p.className = 'gold-particle';
+            const size = Math.random() * 3 + 2 + 'px';
+            p.style.width = size; p.style.height = size;
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.animationDuration = Math.random() * 6 + 4 + 's';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            p.style.opacity = Math.random() * 0.7 + 0.3;
+            particlesContainer.appendChild(p);
+        }
+
+        // MUSIC LOGIC
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        const btnBuka = document.getElementById('btnBuka');
+        const konten = document.getElementById('konten');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                musicIcon.className = 'fa-solid fa-music';
+            } else {
+                music.play().catch(()=>console.log("Autoplay blocked"));
+                musicIcon.className = 'fa-solid fa-pause';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        musicBtn.addEventListener('click', toggleMusic);
+
+        btnBuka.addEventListener('click', () => {
+            konten.classList.remove('hidden');
+            // Matikan efek pulse tombol setelah diklik
+            btnBuka.classList.remove('animate-pulse-gold'); 
+            if(!isPlaying) toggleMusic();
+            window.scrollTo({ top: konten.offsetTop, behavior: 'smooth' });
+        });
+
+        // COUNTDOWN
+        const target = new Date("May 20, 2030 09:00:00").getTime();
+        setInterval(() => {
+            const diff = target - new Date().getTime();
+            if(diff > 0) {
+                document.getElementById('d').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            }
+        }, 1000);
+
+        // AUTOPLAY SLIDER
+        const slider = document.getElementById('sliderPrewed');
+        let slideInterval;
+        function startAutoplay() {
+            slideInterval = setInterval(() => {
+                if (slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth - 10)) {
+                    slider.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    slider.scrollTo({ left: slider.scrollLeft + slider.clientWidth * 0.85, behavior: 'smooth' });
+                }
+            }, 3000);
+        }
+        function stopAutoplay() { clearInterval(slideInterval); }
+        btnBuka.addEventListener('click', startAutoplay);
+        slider.addEventListener('touchstart', stopAutoplay);
+        slider.addEventListener('mousedown', stopAutoplay);
+
+    </script>
+</body>
+</html>
